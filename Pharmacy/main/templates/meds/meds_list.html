@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>meds</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;900&family=Quicksand:wght@500&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --Playfair: "Playfair Display", serif;
+            --Roboto: "Roboto", sans-serif;
+            --Quicksand: "Quicksand", sans-serif;
+            --dark: #3c393d;
+            --exDark: #2b2b2b;
+            --primary: #007bff;
+            --light-gray: #f8f9fa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--Quicksand);
+        }
+        body {
+            background-color: var(--light-gray);
+            color: var(--dark);
+        }
+        header {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+        }
+        .navigation {
+            margin-bottom: 15px;
+        }
+        .navigation a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+        .navigation a:hover {
+            color: var(--primary);
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .med {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 280px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .med:hover {
+            transform: translateY(-5px);
+        }
+        .med img {
+            width: 100%;
+            border-radius: 8px;
+            height: 200px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+        .med h3 {
+            margin: 10px 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .med p {
+            font-size: 16px;
+            color: var(--exDark);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="navigation">
+                <a href="{% url 'med-create' %}">Add medication</a>
+            </div>
+        </nav>
+        <h1>Welcome to our Pharmacy</h1>
+    </header>
+
+    <div class="container">
+        {% for med in meds %}
+        <div class="med">
+            <a href="{% url 'med-detail' med.id %}">
+                {% if med.image %}
+                <img src="{{ med.image.url }}">
+                {% else %}
+                <img src="{% static 'default.png' %}" alt="med-image">
+                {% endif %}
+            </a>
+            <h3>Brand: {{ med.title }} | Model: {{ med.brand }}</h3>
+            <p>Narx: {{ med.price }}.00 UZS</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

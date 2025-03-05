@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ med.title }} {{ med.brand }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 700px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .med-img {
+            width: 100%;
+            border-radius: 10px;
+            max-height: 350px;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        .med-title {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .price {
+            font-size: 22px;
+            color: #e63946;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .details {
+            text-align: left;
+            background: #f1f1f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        .details p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+        .description {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 16px;
+            text-align: left;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        .back-btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if med.image %}
+        <img src="{{ med.image.url }}">
+        {% else %}
+        <img src="{% static 'images/default.png' %}" alt="med-image">
+        {% endif %}
+
+        <h1 class="med-title">Dori nomi: {{ med.title }} | Ishlab chiqargan kompaniya: {{ med.brand }}</h1>
+        <p class="price">Narx: {{ med.price }}UZS</p>
+
+        <div class="details">
+            <h3>Texnik xususiyatlari:</h3>
+            <p><strong>Ishlab chiqarilgan vaqti:</strong> {{ med.manufactured_date }}</p>
+            <p><strong>Vazni:</strong> {{ med.weight }}mg</p>
+            <p><strong>Amal qilish muddati:</strong> {{ med.expired_date }}</p>
+        </div>
+
+        <div class="description">
+            <h3>Dori haqida:</h3>
+            <p>{{ med.description }}</p>
+        </div>
+
+        <a href="{% url 'meds-list' %}" class="back-btn">⬅️ Orqaga</a>
+        <a href="{% url 'med-update' med.id %}" class="back-btn">Update med</a>
+        <a href="{% url 'med-delete' med.pk %}" class="back-btn">Delete med</a>
+    </div>
+</body>
+</html>
